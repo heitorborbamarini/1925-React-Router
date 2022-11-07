@@ -1,15 +1,20 @@
 import React, {useState, useEffect} from "react";
 import { busca } from "../api/api";
-import {useParams} from "react-router-dom"
+import {useParams, useHistory} from "react-router-dom"
 import '../assets/css/post.css'
 
 const Post = () => {
+    let history = useHistory()
     const {id} = useParams()
     const[post, setPost] = useState({})
 
     useEffect(() => {
         busca('/posts/${id}', setPost)
-    }, [input])
+        .catch(() => {
+           
+            history.push('/404')
+        })
+    }, [id])
 
     return(
         <main className="container flex flex--centro">
